@@ -1,0 +1,193 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{csc}
+\title{CSC165H1
+Problem Set 2}
+\author{Wei CUI}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+\section{AND vs. IMPLIES}
+(a) WTP: $\forall n \in \N, n > 15 \IMP n^3 - 10n^2 + 3 \ge 165$\\
+\\
+Proof: Let $n \in \N$, and assume $n > 15$, WTP:$n^3 - 10n^2 + 3 > 165 \OR n^3 - 10n^2 + 3 = 165$
+\begin{align*}
+    \tag{by assumption}
+    n &> 15\\
+    \tag{since $n > 15$, then $n^2 > 0$}
+    n^3 &> 15n^2\\
+    n^3 - 10n^2 &> 5n^2\\
+    n^3 - 10n^2 + 3 &> 5n^2 + 3\\
+    \tag{since $n > 15$, then $5n^2 + 3 > 1128$}
+    n^3 - 10n^2 + 3 > 5n^2 + 3 &> 1128 > 165
+\end{align*}
+Therefore, $n^3 - 10n^2 + 3 > 165$\\
+Therefore, $n^3 - 10n^2 + 3 > 165 \OR n^3 - 10n^2 + 3 = 165$ holds\\
+Thus, $\forall n \in \N, n > 15 \IMP n^3 - 10n^2 + 3 \ge 165$\\
+\\
+(b) We want to disprove: $\forall n \in \N, n > 15 \AND n^3 - 10n^2 + 3 \ge 165$, which is equivalent to prove its negation: $\exists n \in \N, n \le 15 \OR n^3 -10n^2 + 3 < 165$\\
+\\
+Proof: Take $n = 1$ Then $n = 1 \le 15$\\
+Therefore $\exists n \in \N, n \le 15 \OR n^3 -10n^2 + 3 < 165$\\
+Therefore $\forall n \in \N, n > 15 \AND n^3 - 10n^2 + 3 \ge 165$ is False.
+
+
+\section{Ceiling function}
+(a) Translate into predicate logic: $\forall n,m \in \N, n < m \IMP \ceil{\frac{m - 1}{m} \cdot n} = n$\\
+\\
+Proof: Let $n,m \in \N$, and assume $n < m$, WTS: \ceil{\frac{m - 1}{m} \cdot n} = n
+\newpage
+\begin{align*}
+    \ceil{\frac{m - 1}{m} \cdot n} &= \ceil{(1 - \frac{1}{m}) \cdot n}\\
+    &= \ceil{-\frac{n}{m} + n}\\
+    \tag{since $n,m \in \N$, then $n \in \Z$ and $-\frac{n}{m} \in \R$ and by Fact 2}
+    &= \ceil{-\frac{n}{m}} + n\\
+    \tag{since $n < m$, and by the definition of ceiling function}
+    &= n
+\end{align*}
+Therefore $\ceil{\frac{m - 1}{m} \cdot n} = n$\\
+Therefore $\forall n,m \in \N, n < m \IMP \ceil{\frac{m - 1}{m} \cdot n} = n$\\
+\\
+(b) Define a predicate $IsMultipleOf50(n)$: $\exists q \in \Z, n = 50q$, where $n \in \N$\\
+\\
+Translate into predicate logic: $\forall n \in \N, nextFifty(n) \ge n \ \AND \ IsMultipleOf50(nextFifty(n)) \ \AND\ (\forall x \in \N,x \ge n \AND IsMultipleOf50(x) \IMP x \ge nextFifty(n))$\\
+\\
+Proof: Let $n \in \N$, WTS: $nextFifty(n) \ge n \AND IsMultipleOf50(nextFifty(n)) \AND (\forall x \in \N,x \ge n \AND IsMultipleOf50(x) \IMP x \ge nextFifty(n))$\\
+\\
+At first, we want to show: $nextFifty(n) \ge n$
+\begin{align*}
+    \tag{by the definition of ceiling function}
+    \ceil{\frac{n}{50}} &\ge \frac{n}{50}\\
+    50 \cdot \ceil{\frac{n}{50}} &\ge 50 \cdot \frac{n}{50} = n\\
+    nextFifty(n) &\ge n
+\end{align*}
+Therefore $nextFifty(n) \ge n$ is true\\
+\\
+Next, we want to show that: $IsMultipleOf50(nextFifty(n))$, which is: $\exists q \in \Z, nextFifty(n) = 50q$\\
+Take $q = \ceil{\frac{n}{50}}$  (since by the definition of ceiling function, then $q = \ceil{\frac{n}{50}} \in \Z$)
+\begin{align*}
+    nextFifty(n) = 50 \cdot \ceil{\frac{n}{50}} &= 50q
+\end{align*}
+Therefore $IsMultipleOf50(nextFifty(n))$ is true\\
+\\
+Finally, we want to prove: $\forall x \in \N,x \ge n \AND IsMultipleOf50(x) \IMP x \ge nextFifty(n)$\\
+Let $x \in \N$\\
+Assume $x \ge n$\\
+Assume $IsMultipleOf50(x)$, which is: $\exists q \in \Z, x = 50q$\\
+Let $q$ be such value, WTS: $x \ge nextFifty(n)$, whcih is: $x = 50q \ge 50 \cdot \ceil{\frac{n}{50}}$
+\newpage
+\begin{align*}
+    \tag{by our assumption}
+    x = 50q &\ge n\\
+    \tag{since $q \in Z$}
+    q \ge \frac{n}{50} &\ge \ceil{\frac{n}{50}}\\
+    50q &\ge 50 \cdot \ceil{\frac{n}{50}}\\
+    x = 50q &\ge 50 \cdot \ceil{\frac{n}{50}} = nextFifty(n)
+\end{align*}
+Therefore $x \ge nextFifty(n)$\\
+Therefore $\forall x \in \N,x \ge n \AND IsMultipleOf50(x) \IMP x \ge nextFifty(n)$\\
+\\
+Thus $\forall n \in \N, nextFifty(n) \ge n \AND IsMultipleOf50(nextFifty(n)) \AND (\forall x \in \N,x \ge n \AND IsMultipleOf50(x) \IMP x \ge nextFifty(n))$.
+
+
+\section{Divisibility}
+(a) WTP: $\forall n \in \N, n \le 2300 \IMP (49|n \IFF 50 \cdot (nextFifty(n) - n) = nextFifty(n))$\\
+\\
+Proof: Let $n \in \N$, and assume $n \le 2300$, WTS: $49|n \IFF 50 \cdot (nextFifty(n) - n) = nextFifty(n)$\\
+At first, we prove $"\IMP"$ direction,\\
+Assume $49|n$, which is: $\exists q \in Z, n = 49q$. Let $q$ be such value\\
+WTS: $50 \cdot (nextFifty(n) - n) = nextFifty(n)$
+\begin{align*}
+    \tag{since $n = 49q \le 2300$, then $q < 50$ and by Q2(a)}
+    \ceil{\frac{50 - 1}{50} \cdot q} &= q\\
+    49\ceil{\frac{49q}{50}} &= 49q\\
+    50\ceil{\frac{49q}{50}} -49q &= \ceil{\frac{49q}{50}}\\
+    \tag{since $n = 49q$}
+    nextFifty(n) - n &= \frac{nextFifty(n)}{50}\\
+    50 \cdot (nextFifty(n) - n) &= nextFifty(n)
+\end{align*}
+Therefore $49|n \IMP 50 \cdot (nextFifty(n) - n) = nextFifty(n)$\\
+\\
+Next, we prove $"\Leftarrow"$ direction,\\
+Assume $50 \cdot (nextFifty(n) - n) = nextFifty(n)$, WTP: $49|n$, which is: $\exists q \in Z, n = 49q$\\
+Take $q = \ceil{\frac{n}{50}}$ (since by the definition of ceiling function, then $q \in \Z$)
+\begin{align*}
+    \tag{by our assumption}
+    50 \cdot (nextFifty(n) - n) &= nextFifty(n)\\
+    50 \cdot nextFifty(n) - 50n &= nextFifty(n)\\
+    49 \cdot nextFifty(n) &= 50n\\
+    49\ceil{\frac{n}{50}} &= n\\
+    n &= 49q
+\end{align*}
+Therefore, $49|n \IFF 50 \cdot (nextFifty(n) - n) = nextFifty(n)$\\
+Therefore, $\forall n \in \N, n \le 2300 \IMP (49|n \IFF 50 \cdot (nextFifty(n) - n) = nextFifty(n))$\\
+\\
+(b) Disprove: $\forall n \in \N,49|n \IFF 50 \cdot (nextFifty(n) - n) = nextFifty(n)$\\
+It is equivalent to prove its negation: $\exists n \IN \N,(49|n \AND 50 \cdot (nextFifty(n) - n) \neq nextFifty(n)) \OR (50 \cdot (nextFifty(n) -n) = nextFifty(n) \AND 49\NDIV n)$\\
+\\
+Proof: Take $n = 2450 \in \N$, since $n = 49 \times 50$, then $49|n$ is true\\
+Next, $nextFifty(n) = 50 \cdot \ceil{\frac{n}{50}} = 50\ceil{\frac{2450}{50}} = 50 \times 49 = 2450$,\\
+then $50 \cdot (nextFifty(n) - n) = 50 \cdot (2450 - 2450) = 0 \neq 2450 \neq nextFifty(n)$\\
+Therefore, $50 \cdot (nextFifty(n) - n) \neq nextFifty(n))$\\
+Therefore, $49|n \AND 50 \cdot (nextFifty(n) - n) \neq nextFifty(n))$\\
+Therefore, $(49|n \AND 50 \cdot (nextFifty(n) - n) \neq nextFifty(n)) \OR (50 \cdot (nextFifty(n) -n) = nextFifty(n) \AND 49\NDIV n)$ holds\\
+\\
+Thus, we have proven its negation.
+
+
+\section{Functions.}
+(a) $"f\ is\ bounded"$ in predicate logic: $\exists k \in \R,\forall x \in \N,f(x) \le k$\\
+\\
+(b) Define a predicate $Bounded(f): \exists k \in \R,\forall x\in \N,f(x) \le k$, where $f: \N \to \R ^{\ge 0}$.\\
+Translate into predicate logic: $\forall f_1,f_2:\N \to \R^{\ge 0},Bounded(f_1) \AND Bounded(f_2) \IMP Bounded(f_1+f_2)$\\
+Proof: Let $f_1,f_2:\N \to \R^{\ge 0}$, and assume $Bounded(f_1) \AND Bounded(f_2)$,which is: \\
+$\exists k_1 \in \R,\forall x \in \N,f_1(x) \le k_1$\\
+$\exists k_2 \in \R,\forall x \in \N,f_2(x) \le k_2$\\
+Let $k_1,k_2$ be such values, WTP: $Bounded(f_1+f_2)$, which is: $\exists k_3 \in \R,\forall x \in \N,f_1(x)+f_2(x) \le k_3$\\
+Let $x \in \N$. Take $k_3 = k_1 + k_2$ (since $k_1,k_2 \in \R$, then $k_3 \in \R$)\\
+\begin{align*}
+    \tag{by our assumption}
+    f_1(x) &\le k_1\\
+    \tag{by our assumption}
+    f_2(x) &\le k_2\\
+    f_1(x) + f_2(x) &\le k_1 + k_2\\
+    f_1(x) + f_2(x) &\le k_3
+\end{align*}
+Therefore, $\exists k_3 \in \R,\forall x \in \N,f_1(x)+f_2(x) \le k_3$\\
+Therefore, if $f_1$ and $f_2$ is bounded, then $f_1 + f_2$ is bounded.\\
+\\
+\noindent (c) Prove: $\forall f_1,f_2:\N \to \R^{\ge 0}, Bounded(f_1 + f_2) \IMP Bounded(f_1) \AND Bounded(f_2)$\\
+\\
+Proof: Let $f_1, f_2:\N \to \R^{\ge 0}$, and assume $Bounded(f_1 + f_2)$, which is: $\exists k_3 \in \R,\forall x \in \N,f_1(x) + f_2(x) \le k_3$, let $k_3$ be such value, WTP:$Bounded(f_1) \AND Bounded(f_2)$,which is:\\
+$\exists k_1 \in \R,\forall x \in \N,f_1(x) \le k_1$\\
+$\exists k_2 \in \R,\forall x \in \N,f_2(x) \le k_2$\\
+Let $x\in \N$, and take $k_1 = k_2 = k_3$ (since $k_3 \in \R$, then $k_1,k_2 \in \R$)\\
+\begin{align*}
+    \tag{by our assumption}
+    f_1(x) + f_2(x) &\le k_3\\
+    f_1(x) &\le k_3 - f_2(x)\\
+    \tag{since $f_2:\N \to \R^{\ge 0}$, then $\forall x \in \N,f_2(x) \ge 0$}
+    f_1(x) &\le k_3\\
+    \tag{since $k_3 = k_1$}
+    f_1(x) &\le k_1
+\end{align*}
+Therefore, $\exists k_1 \in \R,\forall x \in \N,f_1(x) \le k_1$\\
+Similarly,\\
+\begin{align*}
+    \tag{by our assumption}
+    f_1(x) + f_2(x) &\le k_3\\
+    f_2(x) &\le k_3 - f_1(x)\\
+    \tag{since $f_1:\N \to \R^{\ge 0}$, then $\forall x \in \N,f_1(x) \ge 0$}
+    f_2(x) &\le k_3\\
+    \tag{since $k_3 = k_2$}
+    f_2(x) &\le k_2
+\end{align*}
+Therefore, $\exists k_2 \in \R,\forall x \in \N,f_2(x) \le k_2$\\
+Therefore, $Bounded(f_1) \AND Bounded(f_2)$ holds\\
+\\
+Thus, $\forall f_1,f_2:\N \to \R^{\ge 0}, Bounded(f_1 + f_2) \IMP Bounded(f_1) \AND Bounded(f_2)$
+\end{document}
