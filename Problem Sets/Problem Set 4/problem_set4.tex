@@ -1,0 +1,211 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{csc}
+\title{CSC165H1
+Problem Set 4}
+\author{Wei CUI, Mengyao Li, Xingkun Yin}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+\section{Binary representation and algorithm analysis}
+
+(a) \textbf{Proof:} Let $n \in \N$, and consider the running time of algorithm on an input integer $n$.\\
+\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+For a fixed iteration of the outer loop, the inner loop at Line 13 iterates at most $\floor{log_2(n)} + 1$ times, with each iteration costing a single step, the outer loop at Line 9 iterates n times with each iteration taking at most $\floor{log_2(n)} + 1$ steps. Therefore, the total runtime of this algorithm is at most $1 + n(\floor{log_2(n)} + 1)$, which is $\cO(nlogn)$\\
+\\
+\\
+(b) \textbf{Proof:} Let $n \in \N$, and consider the running time of algorithm on an input integer $n$.\\
+\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+For a fixed iteration of the outer loop, the inner loop at Line 13 iterates at least 0 times. The outer loop at Line 9 iterates n times, with each iteration taking at least a single step. Therefore, the total runtime of this algorithm is at least $1 + n$, which is $\Omega(n)$\\
+\\
+
+\section{Worst-case and best-case algorithm analysis}
+
+(a) \textbf{Proof:} WTP: $\forall n \in \N, \forall L \in \mathcal{I}_{func,L},$ running time of executing $f(L) \le n$\\
+Let $n \in \N$, let $L \in \mathcal{I}_{func,L}$ and consider the running time of this algorithm on an input list $L$ of length $n$.\\
+The initialization lines before the while loop take 1 step (i.e., have runtime independent of the input size).\\
+The while loop at Line 5 terminates when $i \le 0$ and has two options in it, if $L[i]\ \%\ 2 == 0$ is always true, then the loop will iterate $\ceil{log_2(n-1)}$ times, since $i$ is decreased by half of its previous value; if $L[i]\ \%\ 2 == 0$ is always false, then else block executes. Since $i$ decreases $x$ each iteration, $x$ is initialized with 1 and its value doesn't change during the while loop, thus the loop will execute $n-1$ times.\\
+Therefore, by comparing these two options, the while loop iterates at most $n-1$ times, with each iteration taking a single step.\\
+As a result, the total runtime of executing $f(L)$ is at most $n$, which is $\cO(n)$\\
+\\
+\\
+\\
+(b) \textbf{Proof:} WTP: $\forall n \in \N$, $\exists L \in \mathcal{I}_{func,L}$, running time of executing $f(L) \ge n$\\
+Let $n \in \N$, pick a list $L$ with the following property: $L[i] = 1$, for each $i \in \{0, 1, 2,..., n-1\}$.\\
+The initialization lines before the while loop take 1 step (i.e., have runtime independent of the input size).\\
+Since all the elements in list $L$ is 1, which is odd, therefore $L[i]\  \% \ 2 == 0$ is always false. Then the else block executes. Since the while loop terminates when $i \le 0$, and $i$ decreases $x$ each iteration, $x$ is initialized with 1 and its value doesn't change during the while loop, thus the loop will execute $n-1$ times, with each execution taking a single step. As a result, it takes a total of $n$ steps, which is $\Omega(n)$\\
+\\
+\\
+\\
+(c) \textbf{Proof:} WTP: $\forall n \in \N$, $\exists L \in \mathcal{I}_{func,L}$, running time of executing $f(L) \le log(n)$\\
+Let $n \in \N$, pick a list $L$ with the following property: $L[i] = 2$, for each $i \in \{0, 1, 2,..., n -1 \}$.\\
+The initialization lines before the while loop take 1 step (i.e., have runtime independent of the input size).\\
+Since all the elements in list $L$ is 2, which is even, therefore $L[i]\ \%\ 2 == 0$ is always true.Then the loop will always execute if block. Since by each iteration, $i$ will be divided by 2 until $i$ is less than or equal to 0. As a result, the loop will iterate $\ceil{log_2(n-1)}$ times, with each iteration taking a single step. Therefore, the total runtime of executing $f(L)$ is $1+\ceil{log_2(n-1)}$, which is $\cO(logn)$\\
+\\
+\\
+\\
+(d) \textbf{Proof:} WTP: $\forall n \in \N$, $\forall L \in \mathcal{I}_{func,L}$, running time of executing $f(L) \ge log(n)$\\
+Let $n \in \N$, let $L \in \mathcal{I}_{func,L}$ and consider the running time of this algorithm on an input list $L$ of length $n$.\\
+\\
+In this function, $i$ is initially assigned with the value $n-1$ which is a relative large number and $x$ initially equals to 1. Therefore for the best-case runtime of function, we want to run the if branch at Line 6 first. If the else statement at Line 9 is executed first, the function makes $i$ minus $x$ in each iteration, and $x$ is initially equals to 1. In contrast, if the if statement is executed first, the variable $i$ is divided by 2 and the value of $x$ increases by 1. Dividing a large $i$ by 2 always decreases the value of $i$ by at least 1. Therefore, executing the else statement first is far less efficient for the first few iterations. However, after a few iterations, the value of $x$ will be big enough, which makes running the else statement faster. As the result, for the best-case runtime of this function, we want the function to run the if branch at Line 6 first. When the variable $x$ is big enough, enter the else block at Line 9. Next, we will generalize this case and show that its runtime is $\Omega(logn)$.\\
+\\
+Let $a \in \N$ be the number of times of executing the if statement at Line 6 during the while loop. Then $0 \le a \le \ceil{log_2(n-1)}$(which is the number of iterations we only run the if statement), also $a$ must be greater than 0. Let $b \in \mathcal{Q}$, $0 \le b\le1$ and $a = b\ceil{log_2(n-1)}$.\\
+\\
+After executing $a$ times of the if statement at Line 6 during the while loop, the variable $x$ equals to $a + 1$; and the value of the variable $i$ will be $\floor{\frac{n-1}{2^a}}$. The runtime of executing all the if statement during the while loop is $a$ since executing the if statement in each iteration of the while loop takes constant time(a single step).\\
+\\
+Next, we will enter the else block at Line 9. Since the while loop terminates when $i \le 0$, therefore the function will execute $\ceil{\frac{\floor{\frac{n-1}{2^a}}}{a+1}}$ times of the else statement. Since, in each iteration of the while loop, executing the else block costs a single step, therefore the runtime of executing all the else statement during the while loop is $\ceil{\frac{\floor{\frac{n-1}{2^a}}}{a+1}}$.\\
+\\
+The initialization lines before the while loop take 1 step(i.e., have runtime independent of the input size). As a result, the total running time of executing $f(L)$ is at least $\ceil{\frac{\floor{\frac{n-1}{2^a}}}{a+1}} + a+1$.\\
+\begin{align*}
+    \tag{by the definition of the ceiling function}
+    \ceil{\frac{\floor{\frac{n-1}{2^a}}}{a+1}} + a+1 &\ge \frac{\floor{\frac{n-1}{2^a}}}{a+1} + a+1\\
+    \tag{since $a = b\cdot \ceil{log_2(n-1)}$}
+    &=\frac{\floor{\frac{n-1}{2^{b\cdot \ceil{log_2(n-1)}}}}}{1+b\ceil{log_2(n-1)}} + 1+b\ceil{log_2(n-1)}\\
+    &\ge \frac{\floor{\frac{n-1}{2^{b[1+log_2(n-1)]}}}}{1+b[1+log_2(n-1)]}+1+b\cdot \ceil{log_2(n-1)}\\
+    &= \frac{\floor{\frac{(n-1)^{1-b}}{2^b}}}{1+b+b\cdot log_2(n-1)} + 1+b\cdot \ceil{log_2(n-1)}\\
+    &\ge \frac{\frac{(n-1)^{1-b}}{2^b} - 1}{1+b+b\cdot log_2(n-1)}+1+b\cdot \ceil{log_2(n-1)}\\
+    &= \frac{(n-1)^{1-b}-2^b}{2^b+b\cdot 2^b+2^b\cdot b\cdot log_2(n-1)}+1+b\cdot \ceil{log_2(n-1)}\\
+    \tag{since $b$ is a constant}
+    &\in \Omega(logn)
+\end{align*}
+Therefore, $\forall n \in \N$, $\forall L \in \mathcal{I}_{func,L}$, running time of executing $f(L) \ge log(n)$\\
+Therefore, $BC(n) \in \Omega(logn)$\\
+\\
+
+
+\section{Graph algorithm}
+
+(a) \textbf{Proof:} WTP: $WC(n) \in \Theta(2^n)$, which is: $\forall n \in \N$, $\forall M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \le 2^n$ and $\forall n \in \N$, $\exists M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \ge 2^n$\\
+\\
+First, we will prove that $WC(n) \in \cO(2^n)$, which is: $\forall n \in \N$, $\forall M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \le 2^n$\\
+Let $n \in \N$, let $M \in \mathcal{I}_{func,M}$ and consider the running time of this algorithm on an input adjacency matrix $M$ of $n$ by $n$.\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+For a fixed iteration of the outer loop, the inner loop at Line 7 iterates n times with each iteration costing a single step. If $count == 0$ is true only when $i = n-1$, the outer loop at Line 5 will iterate at most $n$ times, with each iteration taking $n$ steps, therefore the total steps of the loop 1 and loop 2 is at most $n^2$. Now let's consider the loop 3 at Line 14, when $i = n-1$, the variable $found\_isolated$ is true, the if block at Line 13 will execute and the loop 3 at Line 14 will iterate $2^n$ times, with each iteration costing a single step.\\
+As a result, the total runtime of executing $f(M)$ is at most $1+n^2+2^n$, which is $\cO(2^n)$\\
+\\
+\\
+\\
+Next, we will prove that $WC(n) \in \Omega(2^n)$, which is: $\forall n \in \N$, $\exists M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \ge 2^n$\\
+Let $n \in \N$, and pick a adjacency matrix $M$ with the following property: $M[i][j] = 0$, for each $i,j\in \{0,1,2,...,n-1\}$\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+When $i = 0$, the inner loop at Line 7 will execute $n$ times, with each execution taking a single step, after executing the second loop at Line 7, the variable $count$ will equal to 0, since $M[0][j] = 0$, for each $j \in \{0, 1, 2,..., n-1\}$. Then the variable $found\_isolated$ will be assigned True and loop 1 at Line 5 will terminate after the first iteration because of the break statement at Line 11. Therefore, the total cost of loop 1 and loop 2 is $n$ steps.\\
+Since the variable $found\_isolated$ is True, then the if block at Line 13 will execute, and loop 3 at Line 14 will iterate $2^n$ times, with each iteration costing a single step, thus the loop 3 will take a totol of $2^n$ steps.\\
+As a result, the total runtime of executing $f(M)$ is $1+n+2^n$, which is $\Omega(2^n)$\\
+\\
+Finally, since $WC(n) \in \cO(2^n) \AND WC(n) \in \Omega(2^n)$, therefore we can conclude that $WC(n) \in \Theta(2^n)$.\\
+\\
+\\
+\\
+\\
+\\
+\\
+(b) \textbf{Proof:} WTP: $BC(n) \in \Theta(n^2)$, which is: $\forall n \in \N$, $\exists M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \le n^2$ and $\forall n \in \N$, $\forall M \in \mathcal{I}_{func,M}$,running time of executing $f(M) \ge n^2$\\
+\\
+First, we will prove that $BC(n) \in \cO(n^2)$, which is: $\forall n \in \N$, $\exists M \in \mathcal{I}_{func,M}$,running time of executing $f(M) \le n^2$\\
+Let $n \in \N$, and pick a adjacency matrix $M$ with the following property:  except for the diagonal of the adjacency matrix, all the other entries are filled with 1.\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+For a fixed iteration of the outer loop, the inner loop at Line 7 iterates $n$ times and take a constant time with each iteration. Since $M[i][j] = 1$, for all $i, j\in \{0, 1, 2,..., n-1\}$ (except for the diagonal of the adjacency matrix), the variable $count$ will never be equal to 0, which means that the algorithm will never enter the if block at Line 9 and reach the break statement at Line 11. The outer loop at Line 5 thus will iterate $n$ times, with each iteration taking $n$ steps. Therefore after ending loop 1 at Line 5 and loop 2 at Line 7, the total runtime is $n^2$. Since the algorithm never reaches the if block at Line 9, the variable $found\_isolated$ is always False. As a result, we won't enter the if block at Line 13 and loop 3 will not run any times.\\
+Thus, the overall running time of executing $f(M)$ is $1+n^2$, which is $\cO(n^2)$\\
+\\
+Next, we will prove that $BC(n) \in \Omega(n^2)$, which is: $\forall n \in \N$, $\forall M \in \mathcal{I}_{func,M}$, running time of executing $f(M) \ge n^2$\\
+Let $n \in \N$, let $M \in \mathcal{I}_{func,M}$ and consider the running time of this algorithm on an input adjacency matrix $M$ of $n$ by $n$.\\
+The initialization lines before the for loop take 1 step (i.e., have runtime independent of the input size).\\
+For a fixed iteration of the outer loop, the inner loop at Line 7 takes $n$ iterations, with each iteration costing a single step. If the variable $count$ never equals to 0, then we won't enter the if block at Line 9 and the variable $found\_isolated$ will always be False. Therefore, the outer loop at Line 5 will iterate $n$ times, with each iteration taking $n$ steps. Since the variable $found\_isolated$ is False, then we won't reach the if block at Line 13 and loop 3 at Line 14 will not run any times.\\
+Therefore, the total running time of executing $f(M)$ is at least $1+n^2$, which is $\Omega(n^2)$\\
+\\
+Finally, since $BC(n) \in \cO(n^2) \AND BC(n) \in \Omega(n^2)$, then we can conclude that $BC(n) \in \Theta(n^2)$.
+\\
+\\
+\\
+\\
+\\
+\\
+(c) Let $n \in \N$, formula for the number of adjacency matrices of size n-by-n that represent valid graphs is: $2^{\frac{n(n-1)}{2}}$\\
+\\
+\\
+\\
+(d) \textbf{Proof by induction:} we define a predicate $P(n):$ The number of adjacency matrices of size $n$-by-$n$ is: $2^{\frac{n(n-1)}{2}}$\\
+WTP: $\forall n \in \N$, $P(n)$\\
+\base\quad when $n = 0$
+\begin{align*}
+    \tag{since $n = 0$}
+    2^{\frac{n(n-1)}{2}} &= 2^{\frac{0\cdot (-1)}{2}}\\
+    &= 2^0\\
+    &= 1
+\end{align*}
+By intuition, the only possible matrix is the empty matrix(a 0-by-0 matrix). Therefore, the formula works for when $n=0$\\
+Thus, $P(0)$ holds.\\
+\\
+\istep\quad Let $k \in \N$, and assume $P(k)$ is true, which is: the number of adjacency matrices of size $k$-by-$k$ is: $2^{\frac{k(k-1)}{2}}$, WTS: $P(k+1)$ is true, which is: the number of adjacency matrices of size $(k+1)$-by-$(k+1)$ is: $2^{\frac{(k+1)k}{2}}$.\\
+Let $G=(V,E)$ be a graph, and let $V=\{0, 1, 2,..., n-1\}$ be the vertices of the graph. Let $M$ be a two-dimensional $n$-by-$n$ array containing 0's or 1's called adjacency matrix.\\
+\\
+Let's consider a $(k+1)$-by-$(k+1)$ adjacency matrix. The first $k$ columns and $k$ rows making it a $k$-by-$k$ adjacency matrix which represents the graph containing the first $k$ vertices. By induction hypothesis, the number of adjacency matrices of size $k$-by-$k$ is: $2^{\frac{k(k-1)}{2}}$. Since the adjacency matrix is symmetrical (an edge $\{i,j\}$ is equivalent to an edge $\{j,i\}$), and that no vertex can ever be adjacent to itself. This means that for all $i,j\in \{0,1,2,...,n-1\}$, $M[i][j] == M[j][i]$, and that $M[i][i]=0$. Therefore, we only have to consider $k$ different entries in the last $(k+1)^{th}$ column (Since $M[k+1][k+1] = 0$), for each entry in the $(k+1)^{th}$ column, there are two possibilities (i.e., 0 or 1). Thus, there are a total of $2^k$ possibilities. So the number of adjacency matrices of size $(k+1)$-by-$(k+1)$ is:
+\begin{align*}
+    \tag{By induction hypothesis}
+    2^{\frac{k(k-1)}{2}}\cdot 2^k &= 2^{\frac{k(k-1)}{2} + k}\\
+    &= 2^{\frac{k^2-k+2k}{2}}\\
+    &= 2^{\frac{k^2+k}{2}}\\
+    &= 2^{\frac{(k+1)k}{2}}
+\end{align*}
+Therefore, $P(k+1)$ is true\\
+Therefore, the number of adjacency matrices of size $n$-by-$n$ is: $2^{\frac{n(n-1)}{2}}$
+\\
+\\
+\\
+(e) \textbf{Proof:} Let $n\in \N$, WTP: the number of $n$-by-$n$ adjacency matrices that represent a graph with at least one isolated vertex is at most $n\cdot 2^{\frac{(n-1)(n-2)}{2}}$.\\
+\\
+Let $G=(V,E)$ be a graph, and let $V=\{0, 1, 2,..., n-1\}$ be the vertices of the graph. Let $E$ be defined as: a set $E$ of pair of objects, where each pair $(v_1, v_2)$ consists of two distinct vertices - i.e.,$v_1,v_2\in V$ and $v_1 \neq v_2$ - and is called an edge of the graph.\\
+Let $M$ be a two-dimensional $n$-by-$n$ array containing 0's or 1's called adjacency matrix.\\
+\\
+Let's consider the set $V=\{0,1,2,...,n-1\}$, let $i\in \N$ and $i\le n-1$. We pick an arbitrary vertex $v_i$ in the set $V$ to be the isolated vertex. Since $\forall G=(V,E)$, $|E| \le \frac{|V|(|V|-1)}{2}$ (cited from the course notes), there are at most $\frac{(n-1)(n-2)}{2}$ edges in the graph, which means that there are $\frac{(n-1)(n-2)}{2}$ entries in the adjacency matrix, with each entry containing two possibilities: 0 or 1 (since $v_i$ is already chosen to be the isolated vertex, then the number of rest vertices are $n-1$). As a result, the number of $n$-by-$n$ adjacency matrices that represent a graph with one particular isolated vertex $v_i$ is at most $2^{\frac{(n-1)(n-2)}{2}}$. Since $|V| = n$, we can choose $v_0$ or $v_1$ or... $v_{n-1}$ to be the particular isolated vertex (There are total $n$ choices).\\
+Therefore the number of $n$-by-$n$ adjacency matrices that represent a graph with at least one isolated vertex is at most $n\cdot 2^{\frac{(n-1)(n-2)}{2}}$.
+\\
+\\
+\\
+\noindent(f) \textbf{Proof:} WTP: $AC(n) \in \Theta(n^2)$, which is: $AC(n) \in \Omega(n^2) \AND AC(n) \in \cO(n^2)$\\
+Let $n \in \N$, let $\mathcal{I}_n$ be the set of inputs with all valid adjacency matrices, and let $M$ be any valid adjacency matrix.\\
+\\
+First, we will show that: $AC(n) \in \Omega(n^2)$.\\
+Since by question (b), we know that $BC(n) \in \Theta(n^2)$, meaning that $BC(n) \in \Omega(n^2)$, which is: $\forall n \in \N$, $\forall M \in \mathcal{I}_n$, running time of executing $f(M) \ge n^2$\\
+Therefore,
+\begin{align*}
+    AC(n) &= \frac{1}{|\mathcal{I}_n|}\sum_{M\in \mathcal{I}_n}running\  time\ of\ executing\ f(M)\\
+    \tag{since $BC(n) \in \Omega(n^2)$}
+    &\ge \frac{1}{|\mathcal{I}_n|}\cdot |\mathcal{I}_n|\cdot n^2\\
+    &= n^2
+\end{align*}
+Thus, $AC(n) \in \Omega(n^2)$\\
+\\
+Next, we want to show that $AC(n) \in \cO(n^2)$\\
+There are two types of adjacency matrices, one type are the adjacency matrices that represent the graph containing isolated vertices and the other type are the adjacency matrices that represent the graph without isolated vertices.\\
+\\
+Hence, let $\mathcal{I}_{with\_isolated\_vertices}$ ($|\mathcal{I}_{with\_isolated\_vertices}|<|\mathcal{I}_n|$) be the set of inputs with all adjacency matrices that represent the graph containing isolated vertices, for any $M \in \mathcal{I}_{with\_isolated\_vertices}$, let the runtime of executing $f(M)$ be denoted as $RT_1(n)$\\
+\\
+Let $\mathcal{I}_{without\_isolated\_vertices}$ ($|\mathcal{I}_{without\_isolated\_vertices}|<|\mathcal{I}_n|$) be the set of inputs with all adjacency matrices that represent the graph without isolated vertices. For each $M \in \mathcal{I}_{without\_isolated\_vertices}$, let the running time of executing $f(M)$ be denoted as $RT_2(n)$.\\
+\\
+By question (a) and (b), we know that $RT_1(n)\in \cO(2^n)$(the worst-case), which is: \\
+$\forall M \in \mathcal{I}_{with\_isolated\_vertices}$, $RT_1(n) \le 2^n$;\\
+and $RT_2(n)\in \cO(n^2)$(the best-case), meaning that: $\forall M \in \mathcal{I}_{without\_isolated\_vertices}$, $RT_2(n) \le n^2$\\
+\\
+Therefore,
+\begin{align*}
+    AC(n) &= \frac{1}{|\mathcal{I}_n|}\sum_{M\in \mathcal{I}_n}running\  time\ of\ executing\ f(M)\\
+    &= \frac{1}{|\mathcal{I}_n|}[\sum_{M\in \mathcal{I}_{with\_isolated\_vertices}}RT_1(n) + \sum_{M\in \mathcal{I}_{without\_isolated\_vertices}}RT_2(n)]\\
+    &\le \frac{1}{|\mathcal{I}_n|}[|\mathcal{I}_{with\_isolated\_vertices}|\cdot 2^n+|\mathcal{I}_{without\_isolated\_vertices}|\cdot n^2]\\
+    \tag{since by question (e), $|\mathcal{I}_{with\_isolated\_vertices}|\le n\cdot  2^{\frac{(n-1)(n-2)}{2}}$}
+    &\le \frac{1}{|\mathcal{I}_n|}[n\cdot 2^{\frac{(n-1)(n-2)}{2}}\cdot 2^n+|\mathcal{I}_{without\_isolated\_vertices}|\cdot n^2]\\
+    \tag{since $|\mathcal{I}_{without\_isolated\_vertices)}|<|\mathcal{I}_n|$}
+    &\le \frac{1}{|\mathcal{I}_n|}[n\cdot 2^{\frac{(n-1)(n-2)}{2}}\cdot 2^n+|\mathcal{I}_{n}|\cdot n^2]\\
+    \tag{since by question (c), $|\mathcal{I}_n|=2^{\frac{n(n-1)}{2}}$}
+    &= \frac{1}{2^{\frac{n(n-1)}{2}}}\cdot n\cdot 2^{\frac{(n-1)(n-2)}{2}}\cdot 2^n + \frac{1}{|\mathcal{I}_n|}\cdot |\mathcal{I}_n|\cdot n^2\\
+    &= 2n+n^2
+\end{align*}
+Therefore, $AC(n)\in \cO(n^2)$\\
+Since $AC(n)\in \Omega(n^2) \AND AC(n)\in \cO(n^2)$, then we can conclude that $AC(n) \in \Theta(n^2)$.
+\end{document}
