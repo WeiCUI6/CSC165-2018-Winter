@@ -1,0 +1,197 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{csc}
+\title{CSC165H1
+Problem Set 3}
+\author{Wei CUI}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+\section{Special numbers}
+\textbf{Proof}: we define a predicate $P(n):F_n - 2 = \prod_{i = 0}^{n - 1}F_i$, where $n \in \N$\\
+WTP: $\forall n \in \N, P(n)$\\
+\base\quad when $n = 0$
+\begin{align*}
+    \tag{by the definition of $F_n$}
+    F_0 - 2 &= 2^{2^{0}} + 1 - 2\\
+    &= 1\\
+    \tag{since by the course notes, when $j > k$, $\prod_{i=j}^{k} = 1$}
+    &= \prod_{i = 0}^{-1}F_i
+\end{align*}
+Therefore $P(0)$ holds\\
+\\
+\istep\quad Let $k \in \N$ and assume $P(k)$, which is: $F_k - 2 = \prod_{i = 0}^{k - 1}F_i$\\
+WTS: $P(k+1)$, which is: $F_{k+1} - 2 = \prod_{i = 0}^{k}F_i$
+\begin{align*}
+    \prod_{i = 0}^{k}F_i &= \prod_{i = 0}^{k - 1} F_i \cdot F_k\\
+    \tag{by induction hypothesis}
+    &= (F_k - 2)F_k\\
+    \tag{by the definition of $F_n$}
+    &= (2^{2^{k}} + 1 - 2)(2^{2^{k}} + 1)\\
+    &= (2^{2^{k}} - 1)(2^{2^{k}} + 1)\\
+    &= (2^{2^{k}})^{2} - 1\\
+    \tag{by hint, $\forall n \in \N$, $2^{2^{n + 1}} = (2^{2^{n}})^{2}$}
+    &= 2^{2^{k + 1}} - 1\\
+    &= 2^{2^{k + 1}} + 1 - 2\\
+    &= F_{k+1} - 2
+\end{align*}
+Therefore, $P(k+1)$ is True\\
+Therefore $\forall n \in \N$, $F_n - 2 = \prod_{i = 0}^{n - 1}F_i$
+\newpage
+\section{Sequences}
+(a) $a_0 = 1$, $a_1 = \frac{1}{\frac{1}{a_0} + 1} = \frac{1}{2}$, $a_2 = \frac{1}{\frac{1}{a_1} + 1} = \frac{1}{3}$, $a_3 = \frac{1}{\frac{1}{a_2} + 1} = \frac{1}{4}$\\
+\\
+(b) \textbf{Proof}: we define a predicate $P(n): a_n = \frac{1}{n + 1}$, where $n \in \N$\\
+WTP: $\forall n \in \N$, $P(n)$\\
+\base\quad when $n = 0$
+\begin{align*}
+    \tag{by the definition of sequences}
+    a_0 &= 1\\
+    \tag{left side equals to right side}
+    &= \frac{1}{0 + 1}
+\end{align*}
+Therefore, $P(0)$ is True\\
+\\
+\istep\quad Let $k \in \N$, and assume $P(k)$ is true, which is: $a_k = \frac{1}{k + 1}$\\
+WTS: $P(k+1)$, which is: $a_{k+1} = \frac{1}{(k+1) + 1}$
+\begin{align*}
+    \tag{by the definition of sequences}
+    a_{k+1} &= \frac{1}{\frac{1}{a_k} + 1}\\
+    \tag{by induction hypothesis}
+    &= \frac{1}{\frac{1}{\frac{1}{k + 1}} + 1}\\
+    &= \frac{1}{(k + 1) + 1}
+\end{align*}
+Therefore, $P(k+1)$ holds\\
+Therefore $\forall n \in \N$, $a_n = \frac{1}{n + 1}$\\
+\\
+(c) $a_{2,0} = 2$, $a_{2,1} = \frac{2}{\frac{1}{a_{2,0}} + 1} = \frac{4}{3}$, $a_{2,2} = \frac{2}{\frac{1}{a_{2,1}} + 1} = \frac{8}{7}$, $a_{2,3} = \frac{2}{\frac{1}{a_{2,2}} + 1} = \frac{16}{15}$\\
+$a_{3,0} = 3$, $a_{3,1} = \frac{3}{\frac{1}{a_{3,0}} + 1} = \frac{9}{4}$, $a_{3,2} = \frac{3}{\frac{1}{a_{3,1}} + 1} = \frac{27}{13}$, $a_{3,3} = \frac{3}{\frac{1}{a_{3,2}} + 1} = \frac{81}{40}$\\
+\\
+(d) \textbf{Proof}: Let $k \in \N$, and assume $k > 1$\\
+we define a predicate $P(n): a_{k,n} = \frac{k^{n + 1} - k^{n + 2}}{1 - k^{n + 1}}$, where $n \in \N$\\
+WTP: $\forall n \in \N$, $P(n)$\\
+\base\quad when $n = 0$
+\begin{align*}
+    \intertext{left side:}
+    \tag{by the definition of sequences}
+    a_{k,0} = k\\
+    \intertext{right side:}
+    \frac{k^{0 + 1} - k^{0 + 2}}{1 - k^{0 + 1}} &= \frac{k - k^2}{1 - k}\\
+    &= \frac{k(1-k)}{1-k}\\
+    \tag{since $k > 1$, then $1-k \neq 0$}
+    &= k
+\end{align*}
+Therefore, left side equals to right side\\
+Therefore, $P(0)$ holds\\
+\\
+\istep\quad Let $j \in \N$, and assume $P(j)$ is True, which is: $a_{k,j} = \frac{k^{j + 1} - k^{j + 2}}{1 - k^{j + 1}}$\\
+WTS: $P(j + 1)$ holds, which is: $a_{k,j+1} = \frac{k^{j + 2}- k^{j + 3}}{1 - k^{j + 2}}$
+\begin{align*}
+    \tag{by the definition of sequences}
+    a_{k,j+1} &= \frac{k}{\frac{1}{a_{k,j}} + 1}\\
+    \tag{by induction hypothesis}
+    &= \frac{k}{\frac{1}{\frac{k^{j+1} - k^{j+2}}{1-k^{j+1}}} + 1}\\
+    &= \frac{k}{\frac{1 - k^{j+1}+k^{j+1}-k^{j+2}}{k^{j+1} - k^{j+2}}}\\
+    &= \frac{k^{j+2}-k^{j+3}}{1 - k^{j+2}}
+\end{align*}
+Therefore, $P(j+1)$ is True\\
+This completes the proof of the inductive step and thus the proof
+
+\section{Properties of Asymptotic notation}
+(a) \textbf{Proof:} Translate into predicate logic: $\forall f: \N \to \R^{\ge 0}$, $f \in \cO(n) \IMP Sum_f \in \cO(n^2)$\\
+Let $f: \N \to \R^{\ge 0}$, and assume $f \in \cO(n)$, which is: $\exists n_0,c \in \R^{+}, \forall n \in \N, n \ge n_0 \IMP f \le cn$\\
+WTS: $Sum_f \in \cO(n^2)$, which is: $\exists n_1, c_1 \in \R^{+}, \forall n \in \N, n \ge n_1 \IMP Sum_f \le c_1n^2$\\
+\\
+Let $n_0, c$ be such values, and take $n_1 = \ceil{n_0}$ (since $n_0 \in \R^{+}$, then $n_1 \in \R^{+}$), take $c_1 = \sum_{i = 0}^{n_1 - 1}f(i) + (\frac{n_1c}{2} + c)$ (since $f: \N \to \R^{\ge 0}$ and $c \in \R^{+}$, then $c_1 \in \R^{+}$)\\ 
+Let $n \in \N$, and assume $n \ge n_1$, WTP: $Sum_f \le c_1n^2$\\
+\begin{align*}
+    Sum_f = \sum_{i = 0}^{n}f(i) &= \sum_{i = 0}^{n_1 - 1}f(i) + \sum_{i= n_1}^{n}f(i)\\
+    \tag{since $n_1 = \ceil{n_0} \ge n_0$, and by our assumption}
+    &\le \sum_{i = 0}^{n_1 - 1}f(i) + \sum_{i = n_1}^{n}ci\\
+    &= \sum_{i = 0}^{n_1 - 1}f(i) + c\sum_{i = n_1}^{n}i\\
+    &= \sum_{i = 0}^{n_1 - 1}f(i) + c\frac{(n_1 + n)(n - n_1 + 1)}{2}\\
+    &= \sum_{i = 0}^{n_1 - 1}f(i) + c\frac{n_1n-n_1^2+n_1+n^2-n_1n+n}{2}\\
+    &= \sum_{i = 0}^{n_1 - 1}f(i) + c\frac{n-n_1^2+n_1+n^2}{2}\\
+    \tag{since $n_1^2 \ge 0$}
+    &\le \sum_{i = 0}^{n_1 - 1}f(i) + c\frac{n+n_1+n^2}{2}\\
+    &= \sum_{i = 0}^{n_1 - 1}f(i) + \frac{c}{2}n_1 + \frac{c}{2}n + \frac{c}{2}n^2\\
+    \tag{since $n \ge n_1 = \ceil{n_0}$, then $n \ge 1$}
+    &\le \left[\sum_{i = 0}^{n_1 - 1}f(i)\right]n^2 + \frac{c}{2}n_1n^2 + \frac{c}{2}n^2 + \frac{c}{2}n^2\\
+    &= \left[\sum_{i=0}^{n_1-1}f(i) + (\frac{n_1c}{2} +c)\right]n^2\\
+    &= c_1n^2
+\end{align*}
+Therefore, $Sum_f \le c_1n^2$\\
+Therefore, $\forall f: \N \to \R^{\ge 0}$, $f \in \cO(n) \IMP Sum_f \in \cO(n^2)$\\
+\\
+(b) \textbf{Proof:} we define a predicate $P(n): \sum_{i = 1}^{2^n}\frac{1}{i} \ge \frac{n}{2}$, where $n \in \N$\\
+WTP: $\forall n \in \N, P(n)$\\
+\base\quad when $n = 0$\\
+\begin{align*}
+    \sum_{i = 1}^{2^0}\frac{1}{i} = 1 \ge 0 = \frac{0}{2}
+\end{align*}
+Therefore, $P(0)$ holds
+\newpage
+\istep\quad Let $k \in \N$, and assume $P(k)$ is True, which is: $\sum_{i = 1}^{2^k}\frac{1}{i} \ge \frac{k}{2}$\\
+WTS: $P(k+1)$, which is: $\sum_{i = 1}^{2^{k+1}}\frac{1}{i} \ge \frac{k+1}{2}$\\
+\begin{align*}
+    \sum_{i=1}^{2^{k+1}}\frac{1}{i} &= \sum_{i=1}^{2^k}\frac{1}{i} + \sum_{i=2^k +1}^{2^{k+1}}\frac{1}{i}\\
+    \tag{by induction hypothesis}
+    &\ge \frac{k}{2} + \sum_{i=2^k +1}^{2^{k+1}}\frac{1}{i}\\
+    \tag{since $i \le 2^{k+1}$, then $\frac{1}{i} \ge \frac{1}{2^{k+1}}$}
+    &\ge \frac{k}{2} + \sum_{i=2^k+1}^{2^{k+1}}\frac{1}{2^{k+1}}\\
+    &= \frac{k}{2} + \frac{1}{2^{k+1}}\sum_{i=2^k+1}^{2^{k+1}}1\\
+    &= \frac{k}{2} + \frac{1}{2^{k+1}}(2^{k+1} - 2^k)\\
+    &= \frac{k}{2} + 1 - \frac{1}{2}\\
+    &= \frac{k+1}{2}
+\end{align*}
+Therefore, $P(k+1)$ is True\\
+Therefore, $\forall n \in \N$, $\sum_{i = 1}^{2^n}\frac{1}{i} \ge \frac{n}{2}$\\
+\\
+(c) \textbf{Proof:} we want to disprove the claim, then it is equivalent to prove its negation\\
+Translate into predicate logic: $\exists f, g: \N \to \R^{\ge 0}, f(n) \in \cO(g(n)) \AND Sum_f(n) \NOTIN \cO(n\cdot g(n))$\\
+Let $f(n) = \frac{1}{n + 1}$ and $g(n) = \frac{1}{n + 1}$, First we will prove that $f(n) \in \cO(g(n))$\\
+\\
+WTP: $f(n) \in \cO(g(n))$, which is: $\exists n_0,c\in \R^{+}, \forall n \in \N, n \ge n_0 \IMP \frac{1}{n+1} \le c\frac{1}{n+1}$\\
+Let $c = 1$, and $n_0 = 1$, let $n \in \N$, and assume $n \ge n_0$, WTS: $\frac{1}{n+1} \le c\frac{1}{n+1}$\\
+\begin{align*}
+    1 &\le 1\\
+    \tag{since by our assumption, $n \ge n_0 = 1$, then $n+1 > 0$}
+    \frac{1}{n+1} &\le \frac{1}{n+1}\\
+    &= 1 \cdot \frac{1}{n+1}\\
+    &= c\frac{1}{n+1}
+\end{align*}
+Therefore, $\frac{1}{n+1} \le c\frac{1}{n+1}$\\
+Therefore, $f(n) \in \cO(g(n))$\\
+\newpage
+\noindent Next, we will prove $Sum_f(n) \NOTIN \cO(n \cdot g(n))$ by contradiction\\
+Assume $Sum_f(n) \in \cO(n\cdot g(n))$, which is: $\exists n_1,c_1\in \R^{+}, \forall n \in \N, n \ge n_1 \IMP \sum_{i = 0}^{n}\frac{1}{i+1} \le c_1n\cdot \frac{1}{n + 1}$\\
+\\
+Let $n_1,c_1$ be such values. Let $k \in \N$, and let $n = 2^k - 1$\\
+Take $k = \ceil{4c_1 + \log_{2}(n_1 + 1)}$, since $n = 2^k - 1 \ge n_1$, then by our assumption, we have $\sum_{i = 0}^{n}\frac{1}{i+1} \le c_1n\cdot \frac{1}{n+1}$\\
+\begin{align*}
+    \tag{since $n = 2^k - 1$, and $n \ge n_1$}
+    \sum_{i = 0}^{2^k - 1}\frac{1}{i+1} &\le c_1 \cdot \frac{2^k - 1}{2^k}\\
+    \sum_{i = 1}^{2^k}\frac{1}{i} &\le c_1\cdot \frac{2^k - 1}{2^k}\\
+    \tag{by part b}
+    \frac{k}{2} \le \sum_{i = 1}^{2^k}\frac{1}{i} &\le c_1\cdot \frac{2^k - 1}{2^k}\\
+    \frac{k}{2} &\le c_1\cdot \frac{2^k - 1}{2^k}\\
+    \tag{since $k =\ceil{4c_1 + \log_{2}(n_1 + 1)}$, then $2^k - 1 \ge 0$}
+    c_1 &\ge \frac{k}{2}\cdot \frac{2^k}{2^k - 1}\\
+    \tag{since $\frac{2^k}{2^k - 1} > 1$}
+    c_1 &\ge \frac{k}{2}\\
+    \tag{since $k = \ceil{4c_1 + \log_{2}(n_1 + 1)}$}
+    c_1 &\ge \frac{\ceil{4c_1 + \log_{2}(n_1 + 1)}}{2}\\
+    c_1 &\ge \frac{4c_1 + \log_{2}(n_1 + 1)}{2}\\
+    c_1 &\ge 2c_1 + \frac{\log_{2}(n_1 + 1)}{2}\\
+    \tag{since $n_1 \in \R^{+}$, then $\frac{\log_{2}(n_1 + 1)}{2} > 0$}
+    c_1 &\ge 2c_1
+\end{align*}
+Since $c_1 \in \R^{+}$, then $c_1 \neq 0$, therefore we have a contradiction\\
+Therefore, $Sum_f(n) \NOTIN \cO(n\cdot g(n))$\\
+Therefore, $\exists f, g: \N \to \R^{\ge 0}, f(n) \in \cO(g(n)) \AND Sum_f(n) \NOTIN \cO(n\cdot g(n))$\\
+Thus, the original claim is False.
+\end{document}
