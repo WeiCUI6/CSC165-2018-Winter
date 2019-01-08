@@ -6,7 +6,7 @@ Course materials of CSC165 in 2017 Winter at the University of Toronto
 
 - Problem Sets: Problem sets with sample solutions (including my tex file)
 
-- Midterms: Three different versions of midterms with correspongding sample solutions
+- Midterms: Three different versions of midterms with corresponding sample solutions
 
 ## License
 
