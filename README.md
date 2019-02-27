@@ -1,4 +1,4 @@
-# CSC165-2017-Winter
+# CSC165-2017-Winter Mathematical Expression and Reasoning for Computer Science
 Course materials of CSC165 in 2017 Winter at the University of Toronto
 
 ## Contents
